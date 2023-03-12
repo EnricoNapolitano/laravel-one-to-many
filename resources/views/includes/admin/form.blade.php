@@ -2,9 +2,12 @@
 
     @include('includes.alerts.error')
 
+    <!-- form edit -->
     @if($project->exists)
     <form action="{{ route('admin.projects.update', $project->id) }}" method="POST" enctype="multipart/form-data" novalidate>
     @method('PUT')
+    
+    <!-- form upload -->
     @else
     <form action="{{ route('admin.projects.store') }}" method="POST" enctype="multipart/form-data" novalidate>
     @endif
@@ -41,17 +44,18 @@
             <textarea class="form-control  @error('content') is-invalid @enderror" id="content" rows="8" name="content" placeholder="Describe your project..." required> {{ old('content', $project->content) }} </textarea>
         </div>
 
-        <!-- buttons -->
+        <?php #buttons ?>
         <div>
             <button type="submit" class="btn btn-outline-primary"><i class="fa-solid fa-upload me-2"></i>{{ $project->exists ? 'Update' : 'Upload'}}</button>
-            @if(Route::is('admin.projects.edit'))
-            <form action="{{ route('admin.projects.destroy', $project->id) }}" method="POST">
-            @csrf
-            @method('DELETE')
-                <button class="btn btn-outline-danger ms-2" onclick="return confirm('Are you sure you want to delete this project?')"><i class="fa-solid fa-trash-can"></i></button>
-            </form>
-            @endif
-        </div>
+        <div>
+    </form>
+    @if(Route::is('admin.projects.edit'))
+    <form action="{{ route('admin.projects.destroy', $project->id) }}" method="POST">
+    @csrf
+    @method('DELETE')
+        <button id="btn-delete" class="btn btn-outline-danger" onclick="return confirm('Are you sure you want to delete this project?')"><i class="fa-solid fa-trash-can"></i></button>
+    </form>
+    @endif
     </form>
 
 </main>
