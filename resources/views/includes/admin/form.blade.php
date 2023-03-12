@@ -19,6 +19,9 @@
         <div class="col-8 mb-3">
             <h4><label for="title" class="form-label">Title</label></h4>
             <input type="text" class="form-control @error('title') is-invalid @enderror" id="title" placeholder="Write a title for your project" name="title" value="{{ old('title', $project->title) }}" minlength="5" maxlength="50" required>
+            @error('title')
+            <div class="text-danger p-1">{{ $message }}</div>
+            @enderror
         </div>
 
         <!-- select -->
@@ -30,18 +33,27 @@
                 <option @if(old('type_id', $project->type_id) == $type->id) selected @endif value="{{$type->id}}">{{$type->label}}</option>
                 @endforeach
             </select>
+            @error('type_id')
+                <div class="text-danger p-1">{{ $message }}</div>
+            @enderror
         </div>
 
         <!-- input for image -->
         <div class="col-12 mb-3">
             <h4><label for="image" class="form-label @error('image') is-invalid @enderror">Project Image</label></h4>
             <input type="file" class="form-control" id="image" name="image" required>
+            @error('image')
+                <div class="text-danger p-1">{{ $message }}</div>
+            @enderror
         </div>
 
         <!-- textarea -->
         <div class="col-12 mb-3">
             <h4><label for="content" class="form-label">Project Content</label></h4>
             <textarea class="form-control  @error('content') is-invalid @enderror" id="content" rows="8" name="content" placeholder="Describe your project..." required> {{ old('content', $project->content) }} </textarea>
+            @error('content')
+                <div class="text-danger p-1">{{ $message }}</div>
+            @enderror
         </div>
 
         <?php #buttons ?>
