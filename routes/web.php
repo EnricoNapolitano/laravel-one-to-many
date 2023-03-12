@@ -28,7 +28,6 @@ Route::middleware('auth')->prefix('/admin')->name('admin.')->group(function (){
     Route::get('/Projects/create', [ProjectController::class, 'create'])->('projects.create');
     Route::post('/Projects', [ProjectController::class, 'store'])->('projects.store');
     Route::get('/Projects/{project}/edit', [ProjectController::class, 'edit'])->('projects.edit');
-    Route::get('/Projects/{project}/edit', [ProjectController::class, 'edit'])->('projects.edit');
     Route::put('/Projects/{project}', [ProjectController::class, 'update'])->('projects.update');
     Route::delete('/Projects/{project}', [ProjectController::class, 'destroy'])->('projects.destroy'); */
 
