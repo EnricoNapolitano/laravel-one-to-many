@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Models\Project;
+use App\Models\Type;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use App\Http\Controllers\Controller;
@@ -26,7 +27,8 @@ class ProjectController extends Controller
     public function create()
     {
         $project = new Project();
-        return view('admin.projects.create', compact('project'));
+        $types = Type::orderBy('label')->get();
+        return view('admin.projects.create', compact('project'), compact('types'));
     }
 
     /**
@@ -36,11 +38,13 @@ class ProjectController extends Controller
     {
         $request->validate([
             'title' => 'required|string|unique:projects|min:5|max:50',
+            'type_id' => 'nullable|exists:types,id',
             'content' => 'required|string',
             'image' => 'nullable|image|mimes:jpg,jpeg,png',
         ], [
             'title.required' => 'Title is required',
-            'title.unique' => 'This title has alreay been taken',
+            'type_id' => 'Choose the project type',
+            'title.unique' => 'This title has already been taken',
             'title.min' => 'Title has has to be minimun 5 letters',
             'title.max' => 'Title has has to be maximum 50 letters',
             'content.required' => 'Content can\'t be empty',
@@ -57,7 +61,7 @@ class ProjectController extends Controller
         
         // Storing image and creating its path
         if ($request->hasFile('image')) $project->image = Storage::put('upload', $data['image']);
-
+        
         $project->save();
 
         return to_route('admin.projects.show', $project->id);
@@ -76,7 +80,8 @@ class ProjectController extends Controller
      */
     public function edit(Project $project)
     {
-        return view('admin.projects.edit', compact('project'));
+        $types = Type::orderBy('label')->get();
+        return view('admin.projects.edit', compact('project'), compact('types'));
     }
 
     /**
@@ -86,11 +91,13 @@ class ProjectController extends Controller
     {
         $request->validate([
             'title' => ['required','string',Rule::unique('projects')->ignore($project->id),'min:5','max:50'],
+            'type_id' => 'nullable|exists:types,id',
             'content' => 'required|string',
             'image' => 'nullable|image|mimes:jpg,jpeg,png',
         ], [
             'title.required' => 'Title is required',
-            'title.unique' => 'This title has alreay been taken',
+            'type_id' => 'Choose the project type',
+            'title.unique' => 'This title has already been taken',
             'title.min' => 'Title has has to be minimun 5 letters',
             'title.max' => 'Title has has to be maximum 50 letters',
             'content.required' => 'Content can\'t be empty',
