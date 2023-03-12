@@ -1,6 +1,8 @@
 @extends('layouts.app')
 @section('content')
 
-@include('includes.admin.form')
+<main class="container">
+    @include('includes.admin.form')
+</main>
 
 @endsection
