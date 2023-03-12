@@ -3,17 +3,19 @@
     <div class="container">
         <table class="container table table-hover mt-5">
             <thead>
-                <th>#id</th>
-                <th>Title</th>
-                <th class="text-center">Created at</th>
-                <th class="text-center">Updated at</th>
-                <th class="text-end">Actions</th>
+                <th class="text-primary">#id</th>
+                <th class="text-primary">Title</th>
+                <th class="text-primary">Type</th>
+                <th class="text-center text-primary">Created at</th>
+                <th class="text-center text-primary">Updated at</th>
+                <th class="text-end text-primary">Actions</th>
             </thead>
             <tbody>
                 @forelse($projects as $project)
                 <tr>
                     <td>{{ $project->id }}</td>
                     <td>{{ $project->title }}</td>
+                    <td><i class="text-primary fa-solid {{ $project->type->class_icon }}"></i> {{ $project->type->label }}</td>
                     <td class="text-center">{{ $project->created_at }}</td>
                     <td class="text-center">{{ $project->updated_at }}</td>
                     <td class="text-end">
