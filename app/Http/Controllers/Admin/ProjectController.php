@@ -40,7 +40,7 @@ class ProjectController extends Controller
             'title' => 'required|string|unique:projects|min:5|max:50',
             'type_id' => 'nullable|exists:types,id',
             'content' => 'required|string',
-            'image' => 'nullable|image|mimes:jpg,jpeg,png',
+            'image' => 'required|image|mimes:jpg,jpeg,png',
         ], [
             'title.required' => 'Title is required',
             'type_id' => 'Choose the project type',
@@ -93,7 +93,7 @@ class ProjectController extends Controller
             'title' => ['required','string',Rule::unique('projects')->ignore($project->id),'min:5','max:50'],
             'type_id' => 'nullable|exists:types,id',
             'content' => 'required|string',
-            'image' => 'nullable|image|mimes:jpg,jpeg,png',
+            'image' => 'required|image|mimes:jpg,jpeg,png',
         ], [
             'title.required' => 'Title is required',
             'type_id' => 'Choose the project type',
